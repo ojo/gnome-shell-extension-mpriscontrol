@@ -152,7 +152,7 @@ MprisIndicator.prototype = {
         
         this.menu_player_buttons = {
             "player": new PopupMenu.PopupMenuItem("", { reactive: true, style_class: "menu-player" }),
-            "quit": new PopupIconMenuItem("media-eject", { reactive: true })
+            "quit": new PopupIconMenuItem("window-close", { reactive: true })
         }
         
         this.menu_player_buttons.player.connect("activate", Lang.bind(this, this.on_playermenu_clicked));
