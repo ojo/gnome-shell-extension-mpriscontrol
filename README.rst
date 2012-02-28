@@ -18,12 +18,12 @@ Everybody loves screenshots, right?
 
 Playing:
 
-.. image:: http://img155.imageshack.us/img155/2687/mpriscontrolplaying2.png
+.. image:: https://github.com/ojo/gnome-shell-extension-mpriscontrol/raw/gnome-3.2/MprisControl_playing2.png
   :alt: MprisControl (playing)
 
 Menu:
 
-.. image:: http://img441.imageshack.us/img441/1195/mpriscontrolmenu.png
+.. image:: https://github.com/ojo/gnome-shell-extension-mpriscontrol/raw/gnome-3.2/MprisControl_menu.png
   :alt: MprisControl (menu)
 
 
