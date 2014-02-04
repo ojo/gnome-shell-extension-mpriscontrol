@@ -15,7 +15,7 @@ const PLAYBACKSTATUS_PLAYING    = "Playing";
 const PLAYBACKSTATUS_PAUSED     = "Paused";
 
 // TODO: Move to gsettings
-const SUPPORTED_PLAYERS = ["rhythmbox", "nuvolaplayer", "banshee"];
+const SUPPORTED_PLAYERS = ["rhythmbox", "nuvolaplayer", "banshee", "audacious"];
 const HIDE_DISCONNECTED = true;
 
 
