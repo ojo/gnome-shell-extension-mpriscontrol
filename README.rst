@@ -1,11 +1,12 @@
 What is MprisControl?
 =====================
 
-MprisControl is a gnome-shell extension that allows controling any MPRIS_
+MprisControl is a gnome-shell extension that allows controlling any MPRIS_
 compliant player with (literally) one click. The extension places an icon
-on gnome-shell Main Panel which indicates playback status of currently running
-media player. Middle-clicking the icon toggles play/pause. Left- or right-
--clicking shows menu with standard playback control buttons.
+on gnome-shell Main Panel which indicates playback status of the currently
+running media player. Middle-clicking the icon toggles play/pause. Scrolling
+up/down on the icon skips to the previous/next track. Left- or right-clicking
+shows a menu with standard playback control buttons.
 
 .. _MPRIS: http://www.mpris.org/
 
@@ -17,12 +18,12 @@ Everybody loves screenshots, right?
 
 Playing:
 
-.. image:: http://img155.imageshack.us/img155/2687/mpriscontrolplaying2.png
+.. image:: https://github.com/ojo/gnome-shell-extension-mpriscontrol/raw/gnome-3.2/MprisControl_playing2.png
   :alt: MprisControl (playing)
 
 Menu:
 
-.. image:: http://img441.imageshack.us/img441/1195/mpriscontrolmenu.png
+.. image:: https://github.com/ojo/gnome-shell-extension-mpriscontrol/raw/gnome-3.2/MprisControl_menu.png
   :alt: MprisControl (menu)
 
 
@@ -69,3 +70,4 @@ This program is free software: you can redistribute it and/or modify it under th
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with this program.  If not, see http://www.gnu.org/licenses/.
+

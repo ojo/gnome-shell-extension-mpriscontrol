@@ -147,9 +147,19 @@ MprisIndicator.prototype = {
         this.menu_playback.add(this.menu_playback_buttons.playpause.actor, { expand: true, x_fill: false, x_align: St.Align.MIDDLE });
         this.menu_playback.add(this.menu_playback_buttons.next.actor, { expand: true, x_fill: false, x_align: St.Align.END });
 
-        this.menu_player = new PopupMenu.PopupMenuItem("", { reactive: true, style_class: "menu-player" });
-        this.menu_player.connect("activate", Lang.bind(this, this.on_playermenu_clicked));
-        this.menu.addMenuItem(this.menu_player);
+        this.menu_player = new St.BoxLayout({name: "playerControls"});
+        this.menu.addActor(this.menu_player);
+        
+        this.menu_player_buttons = {
+            "player": new PopupMenu.PopupMenuItem("", { reactive: true, style_class: "menu-player" }),
+            "quit": new PopupIconMenuItem("window-close", { reactive: true })
+        }
+        
+        this.menu_player_buttons.player.connect("activate", Lang.bind(this, this.on_playermenu_clicked));
+        this.menu_player_buttons.quit.connect("activate", Lang.bind(this, this.on_playerquit_clicked));
+        
+        this.menu_player.add(this.menu_player_buttons.player.actor, { expand: true, x_fill: false, x_align: St.Align.START });
+        this.menu_player.add(this.menu_player_buttons.quit.actor, { expand: false, x_fill: false, x_align: St.Align.END });
 
         this.unbind_player();
 
@@ -200,11 +210,18 @@ MprisIndicator.prototype = {
         if (this.mprisplayer2) this.mprisplayer2.RaiseRemote();
     },
     
+    on_playerquit_clicked: function() {
+        if (this.mprisplayer2) {
+            this.menu.close(false); // Ugly hack
+            this.mprisplayer2.QuitRemote();
+        }
+    },
+    
     on_player_propertieschanged: function(properties) {
         if ("Identity" in properties)
-            this.menu_player.label.set_text(properties["Identity"]);
+            this.menu_player_buttons.player.label.set_text(properties["Identity"]);
         if ("CanRaise" in properties)
-            this.menu_player.actor.reactive = properties["CanRaise"];
+            this.menu_player_buttons.player.actor.reactive = properties["CanRaise"];
     },
     
     on_playback_propertieschanged: function(properties) {
@@ -233,6 +250,8 @@ MprisIndicator.prototype = {
                 this.on_player_propertieschanged(properties);
             }
         }));
+        
+        this.menu_player_buttons.quit.actor.reactive = true;
         this.menu_playback.show();
     },
     
@@ -265,27 +284,34 @@ MprisIndicator.prototype = {
     
     playback_status_changed: function(playback_status) {
         this.playback_status = playback_status;
-        if (playback_status == PLAYBACKSTATUS_PAUSED) {
-            this.setIcon("media-playback-pause");
-            this.menu_playback_buttons.playpause.setIcon("media-playback-start");
-            this.actor.show();
-        } else if (playback_status == PLAYBACKSTATUS_PLAYING) {
-            this.setIcon("media-playback-start");
-            this.menu_playback_buttons.playpause.setIcon("media-playback-pause");
-            this.actor.show();
-        } else if (playback_status == PLAYBACKSTATUS_STOPPED) {
-            this.setIcon("media-playback-stop");
-            this.menu_playback_buttons.playpause.setIcon("media-playback-start");
-            this.actor.show();
-        } else {
-            for each (let b in this.menu_playback_buttons) {
-                b.actor.reactive = false;
-            }
-            this.setIcon("media-eject");
-            this.menu_playback_buttons.playpause.setIcon("media-playback-start");
-            this.menu_player.label.set_text(_("No player found"));
-            this.menu_player.actor.reactive = false;
-            if (HIDE_DISCONNECTED) this.actor.hide();
+        switch (playback_status) {
+            case PLAYBACKSTATUS_PAUSED:
+                this.setIcon("media-playback-pause");
+                this.menu_playback_buttons.playpause.setIcon("media-playback-start");
+                this.actor.show();
+                break;
+            case PLAYBACKSTATUS_PLAYING:
+                this.setIcon("media-playback-start");
+                this.menu_playback_buttons.playpause.setIcon("media-playback-pause");
+                this.actor.show();
+                break;
+            case PLAYBACKSTATUS_STOPPED:
+                this.setIcon("media-playback-stop");
+                this.menu_playback_buttons.playpause.setIcon("media-playback-start");
+                this.actor.show();
+                break;
+            default:
+                for each (let b in this.menu_playback_buttons) {
+                    b.actor.reactive = false;
+                }
+                this.setIcon("media-eject");
+                this.menu_playback_buttons.playpause.setIcon("media-playback-start");
+                this.menu_player_buttons.player.label.set_text(_("No player found"));
+                this.menu_player_buttons.player.actor.reactive = false;
+                this.menu_player_buttons.quit.actor.reactive = false;
+                if (HIDE_DISCONNECTED)
+                    this.actor.hide();
+                break;
         }
     }
 };
